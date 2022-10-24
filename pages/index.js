@@ -1,8 +1,15 @@
 import Head from "next/head"
 import Image from "next/image"
 import styles from "../styles/Home.module.css"
-//import Web3ReactHeader from "../components/Web3ReactHeader"
-import { Web3ModalHeaderv1 } from "../components/Web3ModalHeaderv1"
+
+// Web3React
+// import Web3ReactHeader from "../components/Web3ReactHeader"
+
+// Web3Modal v1
+// import { Web3ModalHeaderv1 } from "../components/Web3ModalHeaderv1"
+
+// Wagmi
+import WagmiHeader from "../components/WagmiHeader"
 
 export default function Home() {
   return (
@@ -13,7 +20,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <Web3ReactHeader /> */}
-      <Web3ModalHeaderv1 />
+      {/* <Web3ModalHeaderv1 /> */}
+      <WagmiHeader />
       Hello
     </div>
   )

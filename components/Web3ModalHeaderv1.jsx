@@ -11,7 +11,7 @@ const providerOptions = {
         },
     },
 }
-export function Web3ModalHeaderv1() {
+export default function Web3ModalHeaderv1() {
     async function connect() {
         web3modal = new Web3Modal({
             cacheProvider: false,
