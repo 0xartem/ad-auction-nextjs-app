@@ -1,3 +1,4 @@
+import { MoralisProvider } from "react-moralis"
 import "../styles/globals.css"
 
 // Web3React
@@ -5,8 +6,8 @@ import "../styles/globals.css"
 // import { Web3Provider } from "@ethersproject/providers"
 
 // Wagmi
-import { WagmiConfig } from "wagmi"
-import { getWagmiClient } from "../components/WagmiHeader"
+// import { WagmiConfig } from "wagmi"
+// import { getWagmiClient } from "../components/WagmiHeader"
 
 // Web3React App
 // const getLibrary = (provider) => {
@@ -26,12 +27,21 @@ import { getWagmiClient } from "../components/WagmiHeader"
 //   return <Component {...pageProps} />
 // }
 
-// Wagmi App
+// // Wagmi App
+// function MyApp({ Component, pageProps }) {
+//   return (
+//     <WagmiConfig client={getWagmiClient()}>
+//       <Component {...pageProps} />
+//     </WagmiConfig>
+//   )
+// }
+
+// Web3uikit App
 function MyApp({ Component, pageProps }) {
   return (
-    <WagmiConfig client={getWagmiClient()}>
+    <MoralisProvider initializeOnMount={false}>
       <Component {...pageProps} />
-    </WagmiConfig>
+    </MoralisProvider>
   )
 }
 
