@@ -6,7 +6,7 @@ import "../styles/globals.css"
 
 // Wagmi
 import { WagmiConfig } from "wagmi"
-import { getWagmiClient } from "../components/WagmiHeader"
+import { getWagmiClient } from "../components/wagmi/WagmiHeader"
 
 // Web3React App
 // const getLibrary = (provider) => {

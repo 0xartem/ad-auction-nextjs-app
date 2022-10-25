@@ -5,6 +5,7 @@ import {
     useConnect,
     useDisconnect,
     useAccount,
+    useBalance,
 } from "wagmi"
 import { publicProvider } from "wagmi/providers/public"
 import { InjectedConnector } from "@wagmi/core"
@@ -17,7 +18,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 
 const client = createClient({
     autoConnect: true,
-    provider,
+    provider: getDefaultProvider(),
     webSocketProvider,
 })
 
@@ -32,10 +33,20 @@ export default function WagmiHeader() {
     const { disconnect } = useDisconnect()
 
     const { address, isConnected } = useAccount()
+    const { data, isError, isLoading } = useBalance({
+        addressOrName: address,
+    })
+
     if (isConnected) {
         return (
             <div>
-                Connected to {address}
+                <div>Connected to {address}</div>
+                {isError && <div>Error fetching balance</div>}
+                {isLoading && <div>Loading balance...</div>}
+                <p>
+                    {!isLoading &&
+                        `Balance: ${data?.formatted} ${data?.symbol}`}
+                </p>
                 <button onClick={() => disconnect()}>
                     Disconnect from wallet
                 </button>

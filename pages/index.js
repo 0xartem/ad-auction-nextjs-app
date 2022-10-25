@@ -9,7 +9,7 @@ import styles from "../styles/Home.module.css"
 // import { Web3ModalHeaderv1 } from "../components/Web3ModalHeaderv1"
 
 // Wagmi
-import WagmiHeader from "../components/WagmiHeader"
+import WagmiHeader from "../components/wagmi/WagmiHeader"
 
 export default function Home() {
   return (
@@ -22,7 +22,6 @@ export default function Home() {
       {/* <Web3ReactHeader /> */}
       {/* <Web3ModalHeaderv1 /> */}
       <WagmiHeader />
-      Hello
     </div>
   )
 }
