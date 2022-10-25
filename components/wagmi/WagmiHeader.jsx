@@ -10,6 +10,7 @@ import {
 import { publicProvider } from "wagmi/providers/public"
 import { InjectedConnector } from "@wagmi/core"
 import { getDefaultProvider } from "ethers"
+import { useEffect } from "react"
 
 const { chains, provider, webSocketProvider } = configureChains(
     [chain.mainnet, chain.polygon, chain.optimism, chain.goerli],
@@ -27,13 +28,28 @@ export function getWagmiClient() {
 }
 
 export default function WagmiHeader() {
-    const { connect } = useConnect({
+    const { connect, isLoading: isConnectLoading } = useConnect({
         connector: new InjectedConnector(),
+        onSettled(data, error) {
+            console.log("onSettled Callback", { data, error })
+        },
     })
-    const { disconnect } = useDisconnect()
+    const { disconnect, isLoading: isDisconnectLoading } = useDisconnect()
 
-    const { address, isConnected } = useAccount()
-    const { data, isError, isLoading } = useBalance({
+    const { address, isConnected } = useAccount({
+        onConnect({ address, connector, isReconnected }) {
+            console.log("onConnect callback", {
+                address,
+                connector,
+                isReconnected,
+            })
+        },
+    })
+    const {
+        data,
+        isError,
+        isLoading: isBalanceLoading,
+    } = useBalance({
         addressOrName: address,
     })
 
@@ -42,12 +58,15 @@ export default function WagmiHeader() {
             <div>
                 <div>Connected to {address}</div>
                 {isError && <div>Error fetching balance</div>}
-                {isLoading && <div>Loading balance...</div>}
+                {isBalanceLoading && <div>Loading balance...</div>}
                 <p>
-                    {!isLoading &&
+                    {!isBalanceLoading &&
                         `Balance: ${data?.formatted} ${data?.symbol}`}
                 </p>
-                <button onClick={() => disconnect()}>
+                <button
+                    onClick={() => disconnect()}
+                    disabled={isDisconnectLoading}
+                >
                     Disconnect from wallet
                 </button>
             </div>
@@ -55,7 +74,9 @@ export default function WagmiHeader() {
     } else {
         return (
             <div>
-                <button onClick={() => connect()}>Connect to wallet</button>
+                <button onClick={() => connect()} disabled={isConnectLoading}>
+                    Connect to wallet
+                </button>
             </div>
         )
     }
