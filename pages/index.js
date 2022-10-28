@@ -11,8 +11,11 @@ import styles from "../styles/Home.module.css"
 // Wagmi
 // import WagmiHeader from "../components/WagmiHeader"
 
+// RainbowKit
+import { RainbowKitHeader } from "../components/RainbowKitHeader"
+
 // Web3uikit
-import Web3UIKitHeader from "../components/Web3UIKitHeader"
+// import Web3UIKitHeader from "../components/Web3UIKitHeader"
 
 export default function Home() {
   return (
@@ -25,7 +28,8 @@ export default function Home() {
       {/* <Web3ReactHeader /> */}
       {/* <Web3ModalHeaderv1 /> */}
       {/* <WagmiHeader /> */}
-      <Web3UIKitHeader />
+      {/* <Web3UIKitHeader /> */}
+      <RainbowKitHeader />
     </div>
   )
 }

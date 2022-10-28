@@ -1,5 +1,10 @@
-import { MoralisProvider } from "react-moralis"
 import "../styles/globals.css"
+
+// RainbowKit
+import "@rainbow-me/rainbowkit/styles.css"
+import { WagmiConfig } from "wagmi"
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit"
+import { getWagmiClient, getChains } from "../utils/WagmiUtils"
 
 // Web3React
 // import { Web3ReactProvider } from "@web3-react/core"
@@ -7,9 +12,12 @@ import "../styles/globals.css"
 
 // Wagmi
 // import { WagmiConfig } from "wagmi"
-// import { getWagmiClient } from "../components/WagmiHeader"
+// import { getWagmiClient } from "../utils/WagmiUtils"
 
-// Web3React App
+// Web3uiKit
+// import { MoralisProvider } from "react-moralis"
+
+// Web3React
 // const getLibrary = (provider) => {
 //   return new Web3Provider(provider)
 // }
@@ -36,13 +44,27 @@ import "../styles/globals.css"
 //   )
 // }
 
-// Web3uikit App
+// Rainbow Kit App
 function MyApp({ Component, pageProps }) {
+  const chains = getChains()
+  const { connectors } = getDefaultWallets({ appName: "Ad Auciton", chains })
+  const client = getWagmiClient(connectors)
   return (
-    <MoralisProvider initializeOnMount={false}>
-      <Component {...pageProps} />
-    </MoralisProvider>
+    <WagmiConfig client={client}>
+      <RainbowKitProvider chains={chains} modalSize="compact">
+        <Component {...pageProps} />
+      </RainbowKitProvider>
+    </WagmiConfig>
   )
 }
+
+// Web3uikit App
+// function MyApp({ Component, pageProps }) {
+//   return (
+//     <MoralisProvider initializeOnMount={false}>
+//       <Component {...pageProps} />
+//     </MoralisProvider>
+//   )
+// }
 
 export default MyApp

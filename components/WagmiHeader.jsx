@@ -1,31 +1,5 @@
-import {
-    configureChains,
-    chain,
-    createClient,
-    useConnect,
-    useDisconnect,
-    useAccount,
-    useBalance,
-} from "wagmi"
-import { publicProvider } from "wagmi/providers/public"
+import { useConnect, useDisconnect, useAccount, useBalance } from "wagmi"
 import { InjectedConnector } from "@wagmi/core"
-import { getDefaultProvider } from "ethers"
-import { useEffect } from "react"
-
-const { chains, provider, webSocketProvider } = configureChains(
-    [chain.mainnet, chain.polygon, chain.optimism, chain.goerli],
-    [publicProvider()]
-)
-
-const client = createClient({
-    autoConnect: true,
-    provider: getDefaultProvider(),
-    webSocketProvider,
-})
-
-export function getWagmiClient() {
-    return client
-}
 
 export default function WagmiHeader() {
     const { connect, isLoading: isConnectLoading } = useConnect({
