@@ -1,5 +1,6 @@
 import Head from "next/head"
 import Image from "next/image"
+import { Web3ModalHeaderv2 } from "../components/Web3ModalHeaderv2"
 import styles from "../styles/Home.module.css"
 
 // Web3React
@@ -12,7 +13,7 @@ import styles from "../styles/Home.module.css"
 // import WagmiHeader from "../components/WagmiHeader"
 
 // RainbowKit
-import { RainbowKitHeader } from "../components/RainbowKitHeader"
+// import { RainbowKitHeader } from "../components/RainbowKitHeader"
 
 // Web3uikit
 // import Web3UIKitHeader from "../components/Web3UIKitHeader"
@@ -29,7 +30,8 @@ export default function Home() {
       {/* <Web3ModalHeaderv1 /> */}
       {/* <WagmiHeader /> */}
       {/* <Web3UIKitHeader /> */}
-      <RainbowKitHeader />
+      {/* <RainbowKitHeader /> */}
+      <Web3ModalHeaderv2 />
     </div>
   )
 }
