@@ -1,21 +1,25 @@
-import { configureChains, chain, createClient, Connector } from "wagmi"
+import { configureChains, chain, createClient } from "wagmi"
 import { alchemyProvider } from "wagmi/providers/alchemy"
 import { publicProvider } from "wagmi/providers/public"
-import { getDefaultProvider } from "ethers"
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.mainnet, chain.polygon, chain.optimism, chain.goerli],
-  //[alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
-  [publicProvider()]
+  // [chain.localhost, chain.mainnet, chain.polygon, chain.optimism, chain.goerli],
+  [chain.hardhat, chain.localhost, chain.goerli],
+  [
+    alchemyProvider({ apiKey: "oqdQWdErys9wyzQFmF0Pb0r4etTX9vtI" }),
+    publicProvider(),
+  ]
 )
 
 let client
 
 export function getWagmiClient(connectors) {
+  console.log(`localhost chain id: ${chain.localhost.id}`)
+  console.log(`hardhat chain id: ${chain.hardhat.id}`)
   if (!client) {
     client = createClient({
       autoConnect: true,
-      provider: getDefaultProvider(),
+      provider,
       webSocketProvider,
       connectors,
     })

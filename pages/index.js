@@ -1,5 +1,4 @@
 import Head from "next/head"
-import styles from "../styles/Home.module.css"
 
 // Web3React
 // import Web3ReactHeader from "../components/Web3ReactHeader"
@@ -11,7 +10,7 @@ import styles from "../styles/Home.module.css"
 // import WagmiHeader from "../components/WagmiHeader"
 
 // RainbowKit
-// import { RainbowKitHeader } from "../components/RainbowKitHeader"
+import { RainbowKitHeader } from "../components/RainbowKitHeader"
 
 // Web3uikit
 // import Web3UIKitHeader from "../components/Web3UIKitHeader"
@@ -19,9 +18,13 @@ import styles from "../styles/Home.module.css"
 // Web3Modal v2
 // import { Web3ModalHeaderv2 } from "../components/Web3ModalHeaderv2"
 
+/////////////////////////////////////////////////////////////////////
+
+import AuctionEntrace from "../components/ad-auction/AuctionEntrace"
+
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Ad Auction dApp</title>
         <meta name="description" content="Smart Contract Ad Auction" />
@@ -31,7 +34,8 @@ export default function Home() {
       {/* <Web3ModalHeaderv1 /> */}
       {/* <WagmiHeader /> */}
       {/* <Web3UIKitHeader /> */}
-      {/* <RainbowKitHeader /> */}
+      <RainbowKitHeader />
+      <AuctionEntrace />
       {/* <Web3ModalHeaderv2 /> */}
     </div>
   )

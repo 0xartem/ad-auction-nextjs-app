@@ -1,5 +1,9 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 export function RainbowKitHeader() {
-    return <ConnectButton chainStatus="name" />
+    return (
+        <div className="flex justify-center mt-20">
+            <ConnectButton showBalance={true} chainStatus="full" />
+        </div>
+    )
 }
