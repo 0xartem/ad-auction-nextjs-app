@@ -1,7 +1,7 @@
 import * as contractAddresses from "../../constants/contractAddresses.json"
 //import * as adAuctionAbi from "../../constants/adAuctionAbi.json"
 import * as adAuctionArtifact from "../../../ad-auction-hardhat/artifacts/contracts/AdAuction.sol/AdAuction.json"
-import { useContractRead, useNetwork } from "wagmi"
+import { useNetwork } from "wagmi"
 import CurrentMinimumBid from "./CurrentMinimumBid"
 import CurrentHighestBidder from "./CurrentHighestBidder"
 
@@ -16,17 +16,17 @@ const AdAuctionDetails = () => {
 
     const contractConfig = {
         address: adAuctionAddress,
-        abit: adAuctionArtifact.abi,
+        abi: adAuctionArtifact.abi,
     }
 
     return (
         <div>
             <div>
+                <CurrentMinimumBid contractConfig={contractConfig} />
+            </div>
+            <div>
                 <CurrentHighestBidder contractConfig={contractConfig} />
             </div>
-            {/* <div> //doesn't work for some reason, but when i call this func from AuctionEntrance - it works!!!
-                <CurrentMinimumBid contractConfig={contractConfig} />
-            </div> */}
         </div>
     )
 }
