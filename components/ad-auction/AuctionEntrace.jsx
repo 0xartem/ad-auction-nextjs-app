@@ -1,21 +1,17 @@
 import {
     useNetwork,
     useContractRead,
-    useContract,
     useContractWrite,
     usePrepareContractWrite,
-    useSigner,
     useWaitForTransaction,
 } from "wagmi"
 import * as contractAddresses from "../../constants/contractAddresses.json"
 //import * as adAuctionAbi from "../../constants/adAuctionAbi.json"
 import * as adAuctionArtifact from "../../../ad-auction-hardhat/artifacts/contracts/AdAuction.sol/AdAuction.json"
-import { useEffect, useState } from "react"
 import { ethers } from "ethers"
 
 export default function AuctionEntrace() {
     const { chain } = useNetwork()
-    const { data: signer } = useSigner()
 
     let adAuctionAddress = null
     if (chain && chain.id && chain.id in contractAddresses) {
@@ -60,10 +56,6 @@ export default function AuctionEntrace() {
         },
     })
 
-    useEffect(() => {
-        console.log("Bid Config: ", bidConfig)
-    }, [bidConfig])
-
     const {
         data: txResponse,
         isLoading: isBidLoading,
@@ -72,24 +64,6 @@ export default function AuctionEntrace() {
         error: bidError,
         write: bidOnAd,
     } = useContractWrite(bidConfig)
-
-    const ethersContract = useContract({
-        address: adAuctionAddress,
-        abi: adAuctionArtifact.abi,
-        signerOrProvider: signer,
-    })
-
-    const bidOnAdEthers = async () => {
-        await ethersContract.bidOnAd(
-            "Artem",
-            "http://image.url",
-            "Hey",
-            newBid,
-            {
-                value: ethers.utils.parseEther("0.01"),
-            }
-        )
-    }
 
     const {
         data: txReceipt,
@@ -120,9 +94,6 @@ export default function AuctionEntrace() {
                 )}
                 <button disabled={!bidOnAd} onClick={bidOnAd}>
                     Bid on Ad (Wagmi Hook)
-                </button>
-                <button disabled={!ethersContract} onClick={bidOnAdEthers}>
-                    Bid on Ad (Wagmi Ethers Contract)
                 </button>
             </div>
         )
