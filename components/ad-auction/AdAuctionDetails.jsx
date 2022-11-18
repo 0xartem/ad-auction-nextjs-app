@@ -1,6 +1,5 @@
 import * as contractAddresses from "../../constants/contractAddresses.json"
-//import * as adAuctionAbi from "../../constants/adAuctionAbi.json"
-import * as adAuctionArtifact from "../../../ad-auction-hardhat/artifacts/contracts/AdAuction.sol/AdAuction.json"
+import * as adAuctionAbi from "../../constants/adAuctionAbi.json"
 import { useNetwork } from "wagmi"
 import CurrentMinimumBid from "./CurrentMinimumBid"
 import CurrentHighestBidder from "./CurrentHighestBidder"
@@ -16,7 +15,7 @@ const AdAuctionDetails = () => {
 
     const contractConfig = {
         address: adAuctionAddress,
-        abi: adAuctionArtifact.abi,
+        abi: adAuctionAbi.abi,
     }
 
     if (!adAuctionAddress) return <div>No Ad Auction address available</div>
