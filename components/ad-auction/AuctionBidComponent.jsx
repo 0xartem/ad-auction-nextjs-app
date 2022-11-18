@@ -1,11 +1,15 @@
 import {
+    useContractEvent,
     useContractWrite,
     usePrepareContractWrite,
     useWaitForTransaction,
 } from "wagmi"
 import { ethers } from "ethers"
+import { useState } from "react"
 
 export default function AuctionBidComponent({ contractConfig, currentMinBid }) {
+    const [bidData, setBidData] = useState()
+
     const newBid = parseInt(currentMinBid) + 1
     const { config: bidConfig } = usePrepareContractWrite({
         ...contractConfig,
@@ -38,6 +42,22 @@ export default function AuctionBidComponent({ contractConfig, currentMinBid }) {
         error: txError,
     } = useWaitForTransaction({ confirmations: 1, hash: txResponse?.hash })
 
+    useContractEvent({
+        ...contractConfig,
+        eventName: "OnBid",
+        listener(payer, blockBid, ethBalance, ethPaid, timeLeft) {
+            setBidData({ payer, blockBid, ethBalance, ethPaid, timeLeft })
+            console.log(
+                "Event: ",
+                payer,
+                ethers.utils.formatEther(blockBid),
+                ethers.utils.formatEther(ethBalance),
+                ethers.utils.formatEther(ethPaid),
+                ethers.utils.formatEther(timeLeft)
+            )
+        },
+    })
+
     if (isBidLoading) {
         return <div>Loading...</div>
     } else {
@@ -51,6 +71,24 @@ export default function AuctionBidComponent({ contractConfig, currentMinBid }) {
                     <div>
                         Transaction Response: {JSON.stringify(txResponse)}
                     </div>
+                )}
+                {bidData && (
+                    <ul>
+                        <li>Payer: {bidData.payer}</li>
+                        <li>
+                            Block Bid:{" "}
+                            {ethers.utils.formatEther(bidData.blockBid)}
+                        </li>
+                        <li>
+                            Eth Balance:{" "}
+                            {ethers.utils.formatEther(bidData.ethBalance)}
+                        </li>
+                        <li>
+                            Eth Paid:{" "}
+                            {ethers.utils.formatEther(bidData.ethPaid)}
+                        </li>
+                        <li>Time Left: {bidData.timeLeft.toString()}</li>
+                    </ul>
                 )}
                 <button disabled={!bidOnAd} onClick={bidOnAd}>
                     Bid on Ad (Wagmi Hook)
