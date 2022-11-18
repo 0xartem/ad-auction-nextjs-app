@@ -1,13 +1,8 @@
 import {
-    useNetwork,
-    useContractRead,
     useContractWrite,
     usePrepareContractWrite,
     useWaitForTransaction,
 } from "wagmi"
-import * as contractAddresses from "../../constants/contractAddresses.json"
-//import * as adAuctionAbi from "../../constants/adAuctionAbi.json"
-import * as adAuctionArtifact from "../../../ad-auction-hardhat/artifacts/contracts/AdAuction.sol/AdAuction.json"
 import { ethers } from "ethers"
 
 export default function AuctionBidComponent({ contractConfig, currentMinBid }) {
