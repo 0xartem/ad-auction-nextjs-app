@@ -20,7 +20,7 @@ import { RainbowKitHeader } from "../components/RainbowKitHeader"
 
 /////////////////////////////////////////////////////////////////////
 
-import AuctionEntrace from "../components/ad-auction/AuctionEntrace"
+import AuctionBidComponent from "../components/ad-auction/AuctionBidComponent"
 import AdAuctionDetails from "../components/ad-auction/AdAuctionDetails"
 
 export default function Home() {
@@ -37,7 +37,6 @@ export default function Home() {
       {/* <Web3UIKitHeader /> */}
       <RainbowKitHeader />
       <AdAuctionDetails />
-      <AuctionEntrace />
       {/* <Web3ModalHeaderv2 /> */}
     </div>
   )

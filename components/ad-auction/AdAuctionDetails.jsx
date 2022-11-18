@@ -19,6 +19,8 @@ const AdAuctionDetails = () => {
         abi: adAuctionArtifact.abi,
     }
 
+    if (!adAuctionAddress) return <div>No Ad Auction address available</div>
+
     return (
         <div>
             <div>

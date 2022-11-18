@@ -1,4 +1,5 @@
 import { useContractRead } from "wagmi"
+import AuctionBidComponent from "./AuctionBidComponent"
 
 const CurrentMinimumBid = ({ contractConfig }) => {
     const { data, isLoading, isSuccess, isError, error } = useContractRead({
@@ -10,11 +11,18 @@ const CurrentMinimumBid = ({ contractConfig }) => {
         },
     })
 
+    const currentMinBid = data?.toString()
     return (
         <div>
             <p>{isLoading && "Loading..."}</p>
-            <p>{isSuccess && `Minumum Current Bid: ${data.toString()} wei`}</p>
+            <p>{isSuccess && `Minumum Current Bid: ${currentMinBid} wei`}</p>
             <p>{isError && `Error: ${JSON.stringify(error)}`}</p>
+            <div>
+                <AuctionBidComponent
+                    contractConfig={contractConfig}
+                    currentMinBid={currentMinBid}
+                />
+            </div>
         </div>
     )
 }
