@@ -3,6 +3,7 @@ import * as adAuctionAbi from "../../constants/adAuctionAbi.json"
 import { useNetwork } from "wagmi"
 import CurrentMinimumBid from "./CurrentMinimumBid"
 import CurrentHighestBidder from "./CurrentHighestBidder"
+import AuctionTopUpComponent from "./AuctionTopUpComponent"
 
 const AdAuctionDetails = () => {
     const { chain } = useNetwork()
@@ -27,6 +28,9 @@ const AdAuctionDetails = () => {
             </div>
             <div>
                 <CurrentHighestBidder contractConfig={contractConfig} />
+            </div>
+            <div>
+                <AuctionTopUpComponent contractConfig={contractConfig} />
             </div>
         </div>
     )
