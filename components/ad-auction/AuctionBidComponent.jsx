@@ -6,6 +6,7 @@ import {
 } from "wagmi"
 import { ethers } from "ethers"
 import { useState } from "react"
+import { convertDistanceToTimeString } from "../../utils/TimeUtils"
 
 export default function AuctionBidComponent({ contractConfig, currentMinBid }) {
     const [bidData, setBidData] = useState()
@@ -14,7 +15,7 @@ export default function AuctionBidComponent({ contractConfig, currentMinBid }) {
         ...contractConfig,
         functionName: "topUp",
         overrides: {
-            value: ethers.utils.parseEther("0.01"),
+            value: ethers.utils.parseEther("1"),
         },
         onError(error) {
             console.log("Error to top up", error)
@@ -24,7 +25,7 @@ export default function AuctionBidComponent({ contractConfig, currentMinBid }) {
         },
     })
 
-    const newBid = parseInt(currentMinBid) + 1
+    const newBid = parseInt(currentMinBid) * 1000000
     const { config: bidConfig } = usePrepareContractWrite({
         ...contractConfig,
         functionName: "bidOnAd",
@@ -76,7 +77,10 @@ export default function AuctionBidComponent({ contractConfig, currentMinBid }) {
         ...contractConfig,
         eventName: "OnBid",
         listener(payer, blockBid, ethBalance, ethPaid, timeLeft) {
-            setBidData({ payer, blockBid, ethBalance, ethPaid, timeLeft })
+            const distance = timeLeft * 1000 - new Date().getTime()
+            const timeLeftParsed = convertDistanceToTimeString(distance)
+            console.log("timeLeftParsed: ", timeLeftParsed)
+            setBidData({ payer, blockBid, ethBalance, ethPaid, timeLeftParsed })
             console.log(
                 "OnBid Event: ",
                 payer,
@@ -92,12 +96,14 @@ export default function AuctionBidComponent({ contractConfig, currentMinBid }) {
         ...contractConfig,
         eventName: "OnTopUp",
         listener(payer, ethBalance, ethPaid, timeLeft) {
+            const distance = timeLeft * 1000 - new Date().getTime()
+            const timeLeftParsed = convertDistanceToTimeString(distance)
             setBidData((prevData) => ({
                 ...prevData,
                 payer,
                 ethBalance,
                 ethPaid,
-                timeLeft,
+                timeLeftParsed,
             }))
             console.log(
                 "OnTopUp Event: ",
@@ -128,7 +134,10 @@ export default function AuctionBidComponent({ contractConfig, currentMinBid }) {
                             Eth Paid:{" "}
                             {ethers.utils.formatEther(bidData.ethPaid)}
                         </li>
-                        <li>Time Left: {bidData.timeLeft.toString()}</li>
+                        <li>
+                            Time Left:{" "}
+                            {`${bidData.timeLeftParsed.days} days ${bidData.timeLeftParsed.hours} hours ${bidData.timeLeftParsed.minutes} minutes ${bidData.timeLeftParsed.seconds} seconds`}
+                        </li>
                     </ul>
                 )}
             </div>
@@ -151,7 +160,10 @@ export default function AuctionBidComponent({ contractConfig, currentMinBid }) {
                             Eth Paid:{" "}
                             {ethers.utils.formatEther(bidData.ethPaid)}
                         </li>
-                        <li>Time Left: {bidData.timeLeft.toString()}</li>
+                        <li>
+                            Time Left:{" "}
+                            {`${bidData.timeLeftParsed.days} days ${bidData.timeLeftParsed.hours} hours ${bidData.timeLeftParsed.minutes} minutes ${bidData.timeLeftParsed.seconds} seconds`}
+                        </li>
                     </ul>
                 )}
                 <p>{isBidError && `Bid Error: ${JSON.stringify(bidError)}`}</p>
